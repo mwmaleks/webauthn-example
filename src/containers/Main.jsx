@@ -9,6 +9,10 @@ import LoginWrapper from '../components/LoginWrapper';
 import Buttons from '../components/Buttons';
 import AppBarBlock from '../components/AppBarBlock'
 
+// images
+import happyCat from '../images/cat-happy-yellow.png';
+import happyAss from '../images/cat-ass-yellow.png';
+
 const styles = theme => ({
     root: {
         backgroundColor: '#303030',
@@ -17,7 +21,27 @@ const styles = theme => ({
     nonAuth: {
         textAlign: 'center',
         paddingTop: theme.spacing(20),
-        color: 'white',
+    },
+    auth: {
+        width: '100%',
+        height: '100%',
+    },
+    happyCat: {
+        height: '70%',
+        minWidth: '400px',
+        minHeight: '400px',
+    },
+    catAss: {
+        width: '50%',
+        minWidth: '400px',
+        minHeight: '400px',
+    },
+    imageWrapper: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
     }
 });
 
@@ -39,7 +63,9 @@ function Main(props) {
         }
 
         if (!isLoggedIn && isLoggedInSate) {
-            setLoginState(false);
+            setTimeout(()=> {
+                setLoginState(false);
+            }, 2000);
         }
     });
 
@@ -61,7 +87,15 @@ function Main(props) {
                     isLoginLoading={isLoginLoading}
                     isLoggedIn={isLoggedIn}
                 />
-            </div> : <AppBarBlock email={email} dispatch={dispatch}/>
+            </div> : (!isLoggedIn ?
+                <div className={classes.imageWrapper}>
+                    <img src={happyAss} className={classes.happyCat} alt="Happy Ass"/>
+                </div> : <div className={classes.auth}>
+                <AppBarBlock email={email} dispatch={dispatch}/>
+                <div className={classes.imageWrapper}>
+                    <img src={happyCat} className={classes.happyCat} alt="Happy Cat"/>
+                </div>
+            </div>)
         }
     </div>);
 }
