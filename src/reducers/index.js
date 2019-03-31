@@ -4,6 +4,8 @@ import {
     LOGIN_START,
     LOGIN_END,
     LOGOUT,
+    REGISTER_START,
+    REGISTER_END,
 } from '../actions'
 
 const isEmailError = (state = {}, action) => {
@@ -38,10 +40,39 @@ const runLogin = (state = {}, action) => {
             };
     }
 };
+const runRegister = (state = {}, action) => {
+    switch (action.type) {
+        case REGISTER_START:
+            return {
+                ...state,
+                isRegisterLoading: true,
+                isLoggedIn: false,
+                isRegistered: false,
+                error: null,
+            };
+        case REGISTER_END:
+            return {
+                isRegisterLoading: false,
+                isLoggedIn: action.isRegistered,
+                isRegistered: action.isRegistered,
+                email: action.email,
+                error: action.error,
+            };
+        default:
+            return {
+                isLoginLoading: false,
+                isLoggedIn: false,
+                isRegistered: false,
+                error: null,
+                email: '',
+            };
+    }
+};
 
 const rootReducer = combineReducers({
     isEmailError,
     runLogin,
+    runRegister,
 });
 
 export default rootReducer

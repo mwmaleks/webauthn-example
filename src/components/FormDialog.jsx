@@ -12,12 +12,20 @@ import { customTheme } from '../withRoot';
 
 const EmailField = customTheme(TextField);
 
-const Login = ({ isOpened, onClose, onLogin, isEmailError, errorMessage, onBlur }) => {
+const FormDialog = ({
+    isOpened,
+    onClose,
+    onAction,
+    isEmailError,
+    errorMessage,
+    onBlur,
+    title,
+}) => {
     const [email, setEmail] = useState('');
 
     return (
         <Dialog open={isOpened} onClose={onClose}>
-            <DialogTitle id="form-login-title">Login</DialogTitle>
+            <DialogTitle id="form-login-title">{title}</DialogTitle>
             <DialogContent>
                 <DialogContentText>
                     Please enter your email address here
@@ -42,28 +50,29 @@ const Login = ({ isOpened, onClose, onLogin, isEmailError, errorMessage, onBlur 
                 <Button onClick={onClose} color="default">
                     Cancel
                 </Button>
-                <Button onClick={() => onLogin(email)} color="secondary">
-                    Login
+                <Button onClick={() => onAction(email)} color="secondary">
+                    {title}
                 </Button>
             </DialogActions>
         </Dialog>
     );
 };
 
-Login.propTypes = {
+FormDialog.propTypes = {
     isOpened: pt.bool.isRequired,
     onClose: pt.func.isRequired,
     onBlur: pt.func.isRequired,
+    onAction: pt.func.isRequired,
     isEmailError: pt.bool,
     errorMessage: pt.string,
 };
 
-Login.defaultProps = {
+FormDialog.defaultProps = {
     isEmailError: false,
     errorMessage: '',
 };
 
-export default Login;
+export default FormDialog;
 
 
 

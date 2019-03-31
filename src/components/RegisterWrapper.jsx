@@ -1,12 +1,12 @@
 import React from 'react';
 import FormDialog from './FormDialog';
 import isEmail from 'validator/lib/isEmail';
-import { setEmailError, runLogin } from '../actions';
+import { setEmailError, runRegister } from '../actions';
 
 const errorMessage = 'Please, enter valid email address';
 
 class LoginWrapper extends React.PureComponent {
-    handleLogin = (email) => {
+    handleRegister = (email) => {
         const {
             dispatch,
             onClose,
@@ -14,7 +14,7 @@ class LoginWrapper extends React.PureComponent {
 
         if (isEmail(email)) {
             onClose();
-            dispatch(runLogin(email));
+            dispatch(runRegister(email));
             return;
         }
 
@@ -35,9 +35,9 @@ class LoginWrapper extends React.PureComponent {
     render() {
         return (
             <FormDialog
-                title="Login"
+                title="Register"
                 {...this.props}
-                onAction={this.handleLogin}
+                onAction={this.handleRegister}
                 errorMessage={this.props.isEmailError ? errorMessage : null}
                 onBlur={this.handleBlur}
             />

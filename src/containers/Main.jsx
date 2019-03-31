@@ -6,6 +6,7 @@ import withRoot from '../withRoot';
 
 // components
 import LoginWrapper from '../components/LoginWrapper';
+import RegisterWrapper from '../components/RegisterWrapper';
 import Buttons from '../components/Buttons';
 import AppBarBlock from '../components/AppBarBlock'
 
@@ -46,7 +47,7 @@ const styles = theme => ({
 });
 
 function Main(props) {
-    const { classes, dispatch, isEmailError, isLoginLoading, isLoggedIn, email } = props;
+    const { classes, dispatch, isEmailError, isLoginLoading, isRegisterLoading, isLoggedIn, isRegistered, email } = props;
     const [isOpenedLogin, setOpenLogin] = useState(false);
     const [isOpenedRegister, setOpenRegister] = useState(false);
     const [isLoggedInSate, setLoginState] = useState(false);
@@ -78,6 +79,12 @@ function Main(props) {
                     dispatch={dispatch}
                     isEmailError={isEmailError}
                 />
+                <RegisterWrapper
+                    isOpened={isOpenedRegister}
+                    onClose={() => setOpenRegister(false)}
+                    dispatch={dispatch}
+                    isEmailError={isEmailError}
+                />
                 <Typography variant="h4" gutterBottom color={'primary'}>
                     WebAuthn Demo
                 </Typography>
@@ -85,7 +92,9 @@ function Main(props) {
                     onClickLogin={handleOpenLogin}
                     onClickRegister={handleOpenRegister}
                     isLoginLoading={isLoginLoading}
+                    isRegisterLoading={isRegisterLoading}
                     isLoggedIn={isLoggedIn}
+                    isRegistered={isRegistered}
                 />
             </div> : (!isLoggedIn ?
                 <div className={classes.imageWrapper}>
@@ -105,6 +114,7 @@ Main.propTypes = {
     dispatch: pt.func.isRequired,
     isEmailError: pt.bool.isRequired,
     isLoginLoading: pt.bool.isRequired,
+    isRegisterLoading: pt.bool.isRequired,
     isLoggedIn: pt.bool.isRequired,
     email: pt.bool,
 };

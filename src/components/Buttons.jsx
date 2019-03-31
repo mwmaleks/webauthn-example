@@ -40,7 +40,7 @@ const styles = theme => ({
 const ActionButton = ({
     variant,
     isLoading,
-    isLoggedIn,
+    isSuccess,
     onClick,
     classes,
     text,
@@ -52,8 +52,8 @@ const ActionButton = ({
         disabled={disabled}
         onClick={isLoading ? noop : onClick}
     >
-        {!isLoggedIn && !isLoading && text}
-        {(isLoading || isLoggedIn)  &&
+        {!isSuccess && !isLoading && text}
+        {(isLoading || isSuccess)  &&
             <div className={classes.loginWrapper}>
                 {text}
                 {isLoading
@@ -67,7 +67,7 @@ const ActionButton = ({
 
 ActionButton.propTypes = {
     isLoading: pt.bool.isRequired,
-    isLoggedIn: pt.bool.isRequired,
+    isSuccess: pt.bool.isRequired,
     onClick: pt.func.isRequired,
     classes: pt.object.isRequired,
     text: pt.string.isRequired,
@@ -79,6 +79,7 @@ const Buttons = ({
     classes,
     isLoginLoading,
     isLoggedIn,
+    isRegistered,
     isRegisterLoading
 }) => {
     return (
@@ -90,18 +91,19 @@ const Buttons = ({
                     onClick={onClickLogin}
                     classes={classes}
                     isLoading={isLoginLoading}
-                    isLoggedIn={isLoggedIn}
-                    disabled={isRegisterLoading}
+                    isSuccess={isLoggedIn && !isRegistered}
+                    disabled={isRegisterLoading || isRegistered}
                 />
             </Grid>
             <Grid item xs={12} className={classes.item}>
                 <ActionButton
-                    variant="contained"
+                    variant={isRegisterLoading || isRegistered ? "outlined" : "contained"}
                     text="REGISTER"
                     onClick={onClickRegister}
                     classes={classes}
                     isLoading={isRegisterLoading}
-                    disabled={isLoginLoading || isLoggedIn}
+                    isSuccess={isRegistered}
+                    disabled={isLoginLoading || isLoggedIn && !isRegistered}
                 />
             </Grid>
         </Grid>
@@ -114,6 +116,7 @@ Buttons.propTypes = {
     classes: pt.object.isRequired,
     isLoginLoading: pt.bool.isRequired,
     isLoggedIn: pt.bool.isRequired,
+    isRegistered: pt.bool.isRequired,
     isRegisterLoading: pt.bool.isRequired,
 };
 
