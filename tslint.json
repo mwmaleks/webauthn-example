@@ -6,6 +6,7 @@
             4,
             { "SwitchCase": 1 }
         ],
-        "max-line-length": [true, 120]
+        "max-line-length": [true, 120],
+        "no-increment-decrement": false
     }
 }
