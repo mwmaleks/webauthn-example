@@ -5,7 +5,22 @@
   "dependencies": {
     "@material-ui/core": "next",
     "@material-ui/icons": "^3.0.2",
+    "@types/bluebird": "^3.5.26",
+    "@types/connect-mongo": "^0.0.41",
+    "@types/dotenv": "^6.1.1",
+    "@types/express-session": "^1.15.12",
+    "@types/express-validator": "^3.0.0",
+    "@types/lusca": "^1.5.0",
+    "@types/passport": "^1.0.0",
+    "bluebird": "^3.5.3",
+    "connect-mongo": "^2.0.3",
+    "dotenv": "^7.0.0",
+    "errorhandler": "^1.5.0",
     "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.1",
+    "lusca": "^1.6.1",
+    "passport": "^0.4.0",
     "prop-types": "15.7.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
@@ -14,7 +29,8 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "validator": "^10.11.0"
+    "validator": "^10.11.0",
+    "winston": "^3.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -32,8 +48,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/errorhandler": "^0.0.32",
     "@types/express": "^4.16.1",
     "@types/node": "^11.12.2",
+    "@types/winston": "^2.4.4",
     "tslint": "^5.14.0",
     "tslint-config-airbnb": "^5.11.1",
     "typescript": "^3.4.1"
