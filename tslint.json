@@ -7,6 +7,10 @@
             { "SwitchCase": 1 }
         ],
         "max-line-length": [true, 120],
-        "no-increment-decrement": false
+        "no-increment-decrement": false,
+        "align": [
+            false
+        ],
+        "variable-name": [false]
     }
 }
