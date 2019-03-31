@@ -32,6 +32,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/express": "^4.16.1",
+    "@types/node": "^11.12.2",
     "tslint": "^5.14.0",
     "tslint-config-airbnb": "^5.11.1",
     "typescript": "^3.4.1"
