@@ -6,6 +6,8 @@ import {
     LOGOUT,
     REGISTER_START,
     REGISTER_END,
+    CHECK_SESSION_START,
+    CHECK_SESSION_END,
 } from '../actions'
 
 const isEmailError = (state = {}, action) => {
@@ -69,10 +71,34 @@ const runRegister = (state = {}, action) => {
     }
 };
 
+const checkSession = (state = {}, action) => {
+    switch (action.type) {
+        case CHECK_SESSION_START:
+            return {
+                ...state,
+                isCheckingSession: true,
+            };
+        case CHECK_SESSION_END:
+            return {
+                ...state,
+                isCheckingSession: false,
+                isLoggedIn: Boolean(action.email),
+                email: action.email,
+            };
+        default:
+            return {
+                isCheckingSession: true,
+                isLoggedIn: false,
+                email: null,
+            };
+    }
+};
+
 const rootReducer = combineReducers({
     isEmailError,
     runLogin,
     runRegister,
+    checkSession,
 });
 
 export default rootReducer

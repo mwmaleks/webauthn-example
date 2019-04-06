@@ -10,6 +10,9 @@ import RegisterWrapper from '../components/RegisterWrapper';
 import Buttons from '../components/Buttons';
 import AppBarBlock from '../components/AppBarBlock'
 
+// actions
+import { checkSession } from '../actions';
+
 // images
 import happyCat from '../images/cat-happy-yellow.png';
 import happyAss from '../images/cat-ass-yellow.png';
@@ -47,14 +50,22 @@ const styles = theme => ({
 });
 
 function Main(props) {
-    const { classes, dispatch, isEmailError, isLoginLoading, isRegisterLoading, isLoggedIn, isRegistered, email } = props;
+    // fixme es-lint
+    const { classes, dispatch, isEmailError, isLoginLoading, isRegisterLoading,
+        isLoggedIn, isRegistered, email } = props;
     const [isOpenedLogin, setOpenLogin] = useState(false);
     const [isOpenedRegister, setOpenRegister] = useState(false);
     const [isLoggedInSate, setLoginState] = useState(false);
+    const [isCheckedSession, setChecked] = useState(false);
     const handleOpenLogin = () => setOpenLogin(!isOpenedLogin);
     const handleOpenRegister = () => setOpenRegister(!isOpenedRegister);
 
     useEffect(() => {
+        if (!isCheckedSession) {
+            dispatch(checkSession());
+            setChecked(true);
+        }
+
         if (isLoggedIn && !isLoggedInSate) {
             setTimeout(() => {
                 setLoginState(true);

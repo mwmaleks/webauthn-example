@@ -12,7 +12,7 @@ class Index extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => {
-    const { isEmailError, runLogin, runRegister } = state;
+    const { isEmailError, runLogin, runRegister, checkSession } = state;
     const {
         isLoginLoading,
         email,
@@ -24,13 +24,20 @@ const mapStateToProps = (state) => {
         isLoggedIn: isLoggedInWhileRegistration = false,
         isRegistered,
     } = runRegister;
+    // fixme use only correct emails without mocks
+    const {
+        isCheckingSession = true,
+        isLoggedIn: sessionLoggedIn,
+        email: sessionEmail,
+    } = checkSession;
 
     return {
+        isCheckingSession,
         isEmailError,
         isLoginLoading,
         isRegisterLoading,
-        email: registeredEmail || email,
-        isLoggedIn: isLoggedInWhileRegistration || isLoggedIn,
+        email: registeredEmail || email || sessionEmail,
+        isLoggedIn: isLoggedInWhileRegistration || isLoggedIn || sessionLoggedIn,
         isRegistered,
     };
 };

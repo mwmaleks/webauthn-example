@@ -1,9 +1,13 @@
+import checkSessionRequest from '../requests/checkSession';
+
 export const SET_EMAIL_VALIDATION = '@SET_EMAIL_VALIDATION';
 
 // LOGIN
 export const LOGIN_START = '@LOGIN_START';
 export const LOGIN_END = '@LOGIN_END';
 export const LOGOUT = '@LOGOUT';
+export const CHECK_SESSION_START = '@CHECK_SESSION_START';
+export const CHECK_SESSION_END = '@CHECK_SESSION_END';
 
 //REGISTER
 export const REGISTER_START = '@REGISTER_START';
@@ -67,3 +71,20 @@ export const runRegister = (email) => (dispatch) => {
 export const runLogout = () => ({
     type: LOGOUT
 });
+
+export const checkSessionStart = () => ({
+    type: CHECK_SESSION_START,
+});
+
+export const checkSessionEnd = (email) =>({
+    type: CHECK_SESSION_END,
+    email
+});
+
+export const checkSession = () => (dispatch) => {
+    dispatch(checkSessionStart());
+
+    return checkSessionRequest()
+        .then(({ email }) => dispatch(checkSessionEnd(email)))
+        .catch(() => dispatch(checkSessionEnd(null)));
+};
