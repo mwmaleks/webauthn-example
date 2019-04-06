@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "next",
     "@material-ui/icons": "^3.0.2",
+    "@types/base64url": "^2.0.0",
     "@types/bluebird": "^3.5.26",
     "@types/connect-mongo": "^0.0.41",
     "@types/dotenv": "^6.1.1",
@@ -14,6 +15,7 @@
     "@types/mongoose": "^5.3.24",
     "@types/node-notifier": "^5.4.0",
     "@types/passport": "^1.0.0",
+    "base64url": "^3.0.1",
     "bluebird": "^3.5.3",
     "connect-mongo": "^2.0.3",
     "dotenv": "^7.0.0",
@@ -35,10 +37,11 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "validator": "^10.11.0",
-    "winston": "^3.2.1"
+    "winston": "^2.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
+    "serve": "tsc && node dist",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
