@@ -62,7 +62,6 @@
     "@types/express": "^4.16.1",
     "@types/node": "^11.12.2",
     "@types/winston": "^2.4.4",
-    "ts-node-dev": "^1.0.0-pre.32",
     "tsc-watch": "^2.1.2",
     "tslint": "^5.14.0",
     "tslint-config-airbnb": "^5.11.1",
