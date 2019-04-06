@@ -15,6 +15,7 @@
     "@types/mongoose": "^5.3.24",
     "@types/node-notifier": "^5.4.0",
     "@types/passport": "^1.0.0",
+    "@types/passport-local": "^1.0.33",
     "base64url": "^3.0.1",
     "bluebird": "^3.5.3",
     "connect-mongo": "^2.0.3",
@@ -28,6 +29,7 @@
     "mongoose": "^5.4.20",
     "node-notifier": "^5.4.0",
     "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "prop-types": "15.7.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
@@ -36,6 +38,7 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "superagent": "^5.0.2",
     "validator": "^10.11.0",
     "winston": "^2.4.0"
   },
