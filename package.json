@@ -41,7 +41,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "serve": "tsc && node dist",
+    "serve": "node ./dist",
+    "serve:watch": "tsc --project ./server/tsconfig.json && tsc-watch --project ./server/tsconfig.json --onSuccess \"yarn serve\"",
+    "dev": "yarn serve & yarn start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -60,6 +62,8 @@
     "@types/express": "^4.16.1",
     "@types/node": "^11.12.2",
     "@types/winston": "^2.4.4",
+    "ts-node-dev": "^1.0.0-pre.32",
+    "tsc-watch": "^2.1.2",
     "tslint": "^5.14.0",
     "tslint-config-airbnb": "^5.11.1",
     "typescript": "^3.4.1"
