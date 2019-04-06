@@ -103,6 +103,7 @@ const Buttons = ({
                     classes={classes}
                     isLoading={isRegisterLoading}
                     isSuccess={isRegistered}
+                    // eslint-disable-next-line
                     disabled={isLoginLoading || isLoggedIn && !isRegistered}
                 />
             </Grid>
