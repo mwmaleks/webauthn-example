@@ -18,3 +18,5 @@ export const DEFAULT_ATTESTATION_OPTIONS: DefaultAttestationParams = {
     authenticatorRequireResidentKey: false,
     authenticatorUserVerification: 'required',
 };
+
+export const invalidCredsMessage = 'Invalid attestation object';
