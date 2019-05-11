@@ -10,6 +10,7 @@ import passport from 'passport';
 import expressValidator from 'express-validator';
 import bluebird from 'bluebird';
 import nodeNotifier from 'node-notifier';
+
 import { MONGODB_URI, SESSION_SECRET, ENVIRONMENT } from './constants/secrets';
 
 // @ts-ignore
@@ -44,9 +45,12 @@ mongoose.connect(mongoUrl).then(
 // dev cors
 if (ENVIRONMENT !== 'production') {
     const corsOptions = {
+        credentials: true,
         origin: `http://${process.env.FRONT_HOST || 'localhost'}:${process.env.FRONT_PORT || 3000}`,
         optionsSuccessStatus: 200,
     };
+
+    logger.debug('set up cors options: ', corsOptions);
 
     app.use(cors(corsOptions));
     logger.info(`cors options: ${JSON.stringify(corsOptions)}`);
@@ -76,5 +80,6 @@ app.use((req, res, next) => {
 // routes
 app.post('/checkSession', passportAttestations.isAuthenticated, userController.postSession);
 app.post('/getAttestationChallenge', userController.postCreateAttestationChallenge);
+app.post('/finishAttestation', userController.postFinishAttestation);
 
 export default app;
