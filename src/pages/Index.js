@@ -21,13 +21,11 @@ const mapStateToProps = (state) => {
     const {
         isRegisterLoading,
         email: registeredEmail,
-        isLoggedIn: isLoggedInWhileRegistration = false,
         isRegistered,
     } = runRegister;
     // fixme use only correct emails without mocks
     const {
         isCheckingSession = true,
-        isLoggedIn: sessionLoggedIn,
         email: sessionEmail,
     } = checkSession;
 
@@ -37,7 +35,7 @@ const mapStateToProps = (state) => {
         isLoginLoading,
         isRegisterLoading,
         email: registeredEmail || email || sessionEmail,
-        isLoggedIn: isLoggedInWhileRegistration || isLoggedIn || sessionLoggedIn,
+        isLoggedIn,
         isRegistered,
     };
 };
