@@ -43,7 +43,7 @@ const getAttestationChallenge = (email) => (dispatch) => {
                     dispatch(registerEnd({ isRegistered: true, email, error: null }));
                     dispatch(loginEnd({ isLoggedIn: true, email, error: null }));
                     resolve();
-                }, 3000);
+                }, 500);
             }))
         });
 };

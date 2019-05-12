@@ -34,4 +34,4 @@ const logout = () => ({
     type: LOGOUT
 });
 
-export const runLogout = () => (dispatch) => logoutRequest().then(() => dispatch(logout));
+export const runLogout = () => (dispatch) => logoutRequest().then(() => dispatch(logout()));
