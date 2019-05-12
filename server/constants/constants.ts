@@ -1,11 +1,13 @@
+import { Attachment, UserVerification, Attestation } from 'fido2-lib';
+
 export type DefaultAttestationOptions = {
     timeout: number;
     challengeSize: number;
-    attestation: string;
+    attestation: Attestation;
     cryptoParams: number[];
-    authenticatorAttachment?: string;
+    authenticatorAttachment?: Attachment;
     authenticatorRequireResidentKey: false;
-    authenticatorUserVerification: string;
+    authenticatorUserVerification: UserVerification;
 };
 
 export const DEFAULT_ATTESTATION_OPTIONS: DefaultAttestationOptions = {
@@ -13,8 +15,7 @@ export const DEFAULT_ATTESTATION_OPTIONS: DefaultAttestationOptions = {
     challengeSize: 128,
     attestation: 'none',
     cryptoParams: [-7, -257],
-    // FIXME
-    // authenticatorAttachment: 'platform',
+    authenticatorAttachment: 'platform',
     authenticatorRequireResidentKey: false,
     authenticatorUserVerification: 'required',
 };
