@@ -9,3 +9,12 @@ export const preformatMakeCredReq = ({ challenge, user, ...restOptions }) => ({
     }
 });
 
+export const preformatGetCredential = ({ challenge, timeout, rpId, id, userVerification  }) => ({
+    rpId,
+    userVerification,
+    challenge: decode(challenge),
+    allowCredentials: [{
+        type: 'public-key',
+        id: decode(id)
+    }],
+});
