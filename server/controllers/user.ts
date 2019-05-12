@@ -1,4 +1,13 @@
 import { Request, Response } from 'express';
+import {
+    Fido2Lib,
+    PublicKeyCredentialCreationOptions,
+    PublicKeyCredentialRequestOptions,
+    Fido2LibOptions,
+    AttestationResult,
+    Fido2AttestationResult,
+    AssertionResult,
+}  from 'fido2-lib';
 
 // models
 import User, { UserModel } from '../models/User';
@@ -73,7 +82,6 @@ export const postCreateAttestationChallenge = (req: Request, res: Response) => {
         })
         .catch((error) => {
             logger.error(error);
-            res.status(500);
             res.send({
                 error: 'Error while creating challenge',
                 ok: false,
@@ -101,14 +109,6 @@ export const postFinishAttestation = (req: Request, res: Response) => {
         type,
     } = (req.body || {}).attestation;
 
-    logger.debug('id: ', id);
-    logger.debug('decode(id): ', decode(id));
-    logger.debug('rawId: ', rawId);
-    logger.debug('decode(rawId): ', decode(rawId));
-    logger.debug('clientDataJSON: ', clientDataJSON);
-    logger.debug('attestationObject: ', attestationObject);
-    logger.debug('type: ', type);
-
     const attestation = {
         type,
         response: {
@@ -122,18 +122,27 @@ export const postFinishAttestation = (req: Request, res: Response) => {
         challenge,
     } = req.session;
 
-    if (!challenge) {
-        res.send({
-            code: 'invalid_challenge',
-            error: 'Invalid saved challenge',
-            ok: false,
-        });
-        logger.debug('========================================== postFinishAttestation');
-        return;
-    }
-
     req.getValidationResult()
         .then((result) => {
+
+            logger.debug('id: ', id);
+            logger.debug('decode(id): ', decode(id));
+            logger.debug('rawId: ', rawId);
+            logger.debug('decode(rawId): ', decode(rawId));
+            logger.debug('clientDataJSON: ', clientDataJSON);
+            logger.debug('attestationObject: ', attestationObject);
+            logger.debug('type: ', type);
+
+            if (!challenge) {
+                res.send({
+                    code: 'invalid_challenge',
+                    error: 'Invalid saved challenge',
+                    ok: false,
+                });
+
+                throw new Error('Invalid saved challenge');
+            }
+
             if (!result.isEmpty()) {
                 logger.error('attestation validationResult is not empty');
                 logger.error('attestation validationResult is: ', result.mapped());
@@ -210,4 +219,137 @@ export const postLogout = (req: Request, res: Response) => {
     logger.debug('req.sessionID: ', req.sessionID);
     logger.debug('req.user: ', req.user);
     logger.debug('========================================== logout');
+};
+
+export const postSignInStart = (req: Request, res: Response) => {
+    if (!req.session.credId) {
+        res.send({
+            error: 'can not find credential id',
+            code: 'no_credential_id',
+            ok: false,
+        });
+        logger.debug('========================================== postSignInStart');
+    }
+
+    User.getAssertionOptions()
+        .then((options: PublicKeyCredentialRequestOptions) => {
+            req.session.challenge = options.challenge;
+            logger.debug('options: ', options);
+            res.json({
+                payload: {
+                    id: req.session.credId,
+                    ...options,
+                },
+                ok: true,
+            });
+            logger.debug('========================================== postSignInStart');
+        })
+        .catch((err: Error) => {
+            logger.error('postSignInStart err: ', err);
+
+            res.send({
+                error: 'Assertion error',
+                code: 'assertion_error',
+                ok: false,
+            });
+            logger.debug('========================================== postSignInStart');
+        });
+};
+
+export const postSignInEnd = (req: Request, res: Response) => {
+    req.assert('assertion.id', invalidCredsMessage).isString().isLength({ max: 200, min: 50 });
+    req.assert('assertion.rawId', invalidCredsMessage).isString().isLength({ max: 200, min: 50 });
+    req.assert('assertion.response.clientDataJSON', invalidCredsMessage).isString().isLength({ max: 800, min: 50 });
+    req.assert('assertion.response.authenticatorData', invalidCredsMessage)
+        .isString()
+        .isLength({ max: 500, min: 50 });
+    req.assert('assertion.response.signature', invalidCredsMessage).isString().isLength({ max: 200, min: 10 });
+    req.assert('assertion.response.userHandle', invalidCredsMessage).isString().isLength({ max: 200, min: 10 });
+    req.assert('attestation.type', invalidCredsMessage).isIn('public-key');
+
+    const {
+        challenge,
+    } = req.session;
+    const {
+        id,
+        rawId,
+        response: {
+            clientDataJSON,
+            authenticatorData,
+            signature,
+        },
+        userHandle,
+    } = (req.body || {}).assertion;
+    const assertion: AssertionResult = {
+        id: decode(id),
+        rawId: decode(rawId),
+        response: {
+            clientDataJSON,
+            signature,
+            userHandle,
+            authenticatorData: decode(authenticatorData),
+        },
+    };
+
+    req.getValidationResult()
+        .then((result) => {
+            if (!result.isEmpty()) {
+                logger.error('assertion validationResult is not empty');
+                logger.error('assertion validationResult is: ', result.mapped());
+
+                res.send({
+                    code: 'invalid_assertion',
+                    error: 'Invalid assertion object',
+                    ok: false,
+                });
+
+                throw new Error('Invalid assertion object');
+            }
+        })
+        .then(() => User.findOne({ id: req.session.userId }, (err: Error, user: UserModel) => {
+            if (err) {
+                res.send({
+                    code: 'not_found_user',
+                    error: 'User not found',
+                    ok: false,
+                });
+
+                throw new Error('User not found');
+            }
+
+            return user;
+        }))
+        .then((user: UserModel) => user.validateAssertionObject(id, challenge, assertion))
+        .then((user: UserModel) => new Promise<void>((resolve, reject) => {
+            // invalidate the challenge
+            delete req.session.challenge;
+
+            req.logIn(user, ((err: Error) => {
+                if (!err) {
+                    logger.debug('successfully logged in user');
+                    res.send({
+                        email: user.email,
+                        code: 'login_success',
+                        ok: true,
+                    });
+                    resolve();
+                    logger.debug('========================================== postSignInEnd');
+
+                    return;
+                }
+
+                reject(new Error('unsuccessful login'));
+            }));
+        }))
+        .catch((err: Error) => {
+            logger.error('postSignInEnd error: ', err);
+            if (!res.headersSent) {
+                res.send({
+                    code: 'failed_assertion',
+                    error: 'Failed validate assertion',
+                    ok: false,
+                });
+                logger.debug('========================================== postSignInEnd');
+            }
+        });
 };

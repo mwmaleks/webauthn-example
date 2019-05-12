@@ -4,10 +4,14 @@ import mongoose from 'mongoose';
 import {
     Fido2Lib,
     PublicKeyCredentialCreationOptions,
+    PublicKeyCredentialRequestOptions,
     Fido2LibOptions,
     AttestationResult,
     Fido2AttestationResult,
-}  from 'fido2-lib';
+    AssertionResult,
+    ExpectedAssertionResult,
+    Fido2AssertionResult,
+} from 'fido2-lib';
 import base64url from 'base64url';
 import createRandomBase64URLBuffer from '../utils/createRandomBase64URLBuffer';
 import { DEFAULT_ATTESTATION_OPTIONS, DefaultAttestationOptions } from '../constants/constants';
@@ -56,6 +60,7 @@ export type Options = {
 
 type CreateAttestationOptions = () => Promise<Options>;
 type ValidateAttestationObject = (challenge: string, attestation: AttestationResult) => Promise<UserModel>;
+type ValidateAssertionObject = (id: string, challenge: string, assertion: AssertionResult) => Promise<UserModel>;
 
 type Cred = {
     fmt: string;
@@ -83,7 +88,7 @@ export type UserModel = mongoose.Document & {
     tokens: AuthToken[];
     createAttestationOptions: CreateAttestationOptions;
     validateAttestationObject: ValidateAttestationObject;
-    createAssertionChallenge: Function;
+    validateAssertionObject: ValidateAssertionObject;
     verifyAttestation: Function;
     verifyAssertion: Function;
 };
@@ -111,8 +116,8 @@ userSchema.methods.createAttestationOptions = function () {
 
     return this.save()
         .then(() => f2l.attestationOptions())
-        .then((options: Options) => {
-            const challenge = base64url(options.challenge);
+        .then((options: PublicKeyCredentialCreationOptions) => {
+            const { challenge } = options;
 
             logger.debug('createAttestationOptions: ', options);
 
@@ -163,10 +168,41 @@ userSchema.methods.validateAttestationObject =
         });
     };
 
+userSchema.methods.validateAssertionObject =
+    function (credId: string, challenge: string, assertion: AssertionResult) {
+
+        const {
+            credentialPublicKeyPem,
+            counter,
+        } = this.creds[credId];
+
+        return f2l.assertionResult(assertion, {
+            challenge,
+            publicKey: credentialPublicKeyPem,
+            prevCounter: counter,
+            rpId: RP_ID,
+            origin: ORIGIN,
+            factor: 'either',
+            userHandle: null,
+        }).then<Fido2AssertionResult>(({ authnrData, request }) => {
+            logger.debug('authnrData: ', authnrData);
+            const counter = authnrData.get('counter');
+            const id = base64url(request.id as Buffer);
+
+            this.creds = this.creds || {};
+            this.creds[id] = {
+                ...this.creds[id],
+                counter,
+            };
+
+            return this.save();
+        });
+    };
+
 const UserPure = mongoose.model<UserModel>('User', userSchema);
 
 class User extends UserPure {
-    static getAssertionOptions() {
+    static getAssertionOptions(): Promise<PublicKeyCredentialRequestOptions> {
         return f2l.assertionOptions();
     }
 }
