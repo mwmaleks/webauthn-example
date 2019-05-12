@@ -3,7 +3,7 @@ import request from './request';
 const checkSession = () => {
     return request({
         httpMethod: 'post',
-        url: `${window.API_URL}checkSession`,
+        url: `${window.API_URL}session/check`,
         withCredentials: true
     })
         .then(response => {

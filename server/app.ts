@@ -78,9 +78,9 @@ app.use((req, res, next) => {
 });
 
 // routes
-app.post('/checkSession', passportAttestations.isAuthenticated, userController.postSession);
-app.post('/getAttestationChallenge', userController.postCreateAttestationChallenge);
-app.post('/finishAttestation', userController.postFinishAttestation);
-app.post('/logout', userController.postLogout);
+app.post('/session/check', passportAttestations.isAuthenticated, userController.postSession);
+app.post('/session/logout', userController.postLogout);
+app.post('/credential/begin', userController.postCreateAttestationChallenge);
+app.post('/credential/finish', userController.postFinishAttestation);
 
 export default app;
