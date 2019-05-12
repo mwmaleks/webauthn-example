@@ -54,11 +54,6 @@ export type Options = {
     };
 };
 
-// fixme types
-type AttestationObject = Object;
-
-export type PublicKey = {};
-
 type CreateAttestationOptions = () => Promise<Options>;
 type ValidateAttestationObject = (challenge: string, attestation: AttestationResult) => Promise<UserModel>;
 
@@ -75,8 +70,6 @@ type Cred = {
     },
     credentialPublicKeyPem: string;
 };
-
-type MapKey = keyof Cred;
 
 export type UserModel = mongoose.Document & {
     id: string;
