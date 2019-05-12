@@ -3959,7 +3959,7 @@ fecha@^2.3.3:
 
 "fido2-lib@https://github.com/mwmaleks/fido2-lib":
   version "2.3.0"
-  resolved "https://github.com/mwmaleks/fido2-lib#a0b19e4b8eee49419848df9e9cb805eb541fd4bb"
+  resolved "https://github.com/mwmaleks/fido2-lib#69954cb001973e148ee11a7b9028b34163303117"
   dependencies:
     "@peculiar/webcrypto" "^1.0.1"
     asn1js "^2.0.18"
