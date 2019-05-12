@@ -1,4 +1,4 @@
-export type DefaultAttestationParams = {
+export type DefaultAttestationOptions = {
     timeout: number;
     challengeSize: number;
     attestation: string;
@@ -8,7 +8,7 @@ export type DefaultAttestationParams = {
     authenticatorUserVerification: string;
 };
 
-export const DEFAULT_ATTESTATION_OPTIONS: DefaultAttestationParams = {
+export const DEFAULT_ATTESTATION_OPTIONS: DefaultAttestationOptions = {
     timeout: 15000,
     challengeSize: 128,
     attestation: 'none',
