@@ -4,11 +4,14 @@ import {
     LOGIN_START,
     LOGIN_END,
     LOGOUT,
-    REGISTER_START,
-    REGISTER_END,
+
     CHECK_SESSION_START,
     CHECK_SESSION_END,
 } from '../actions'
+import {
+    REGISTER_START,
+    REGISTER_END,
+} from '../actions/register';
 
 const isEmailError = (state = {}, action) => {
     switch (action.type) {
