@@ -1,7 +1,13 @@
 // import * as bcrypt from 'bcrypt-nodejs';
 // import * as crypto from 'crypto';
 import mongoose from 'mongoose';
-import { Fido2Lib }  from 'fido2-lib';
+import {
+    Fido2Lib,
+    PublicKeyCredentialCreationOptions,
+    Fido2LibOptions,
+    AttestationResult,
+    Fido2AttestationResult,
+}  from 'fido2-lib';
 import base64url from 'base64url';
 import createRandomBase64URLBuffer from '../utils/createRandomBase64URLBuffer';
 import { DEFAULT_ATTESTATION_OPTIONS, DefaultAttestationOptions } from '../constants/constants';
@@ -17,6 +23,11 @@ type PubKeyCredParams = {
     type: string;
     alg: number;
 };
+
+// challenge
+// timeout
+// rpId
+// userVerification
 
 export type Options = {
     rp: {
@@ -37,7 +48,7 @@ export type Options = {
     timeout: number;
     attestation: string;
     authenticatorSelectionCriteria: {
-        attachment: string;
+        authenticatorAttachment: string;
         requireResidentKey: boolean;
         userVerification: string;
     };
@@ -49,7 +60,7 @@ type AttestationObject = Object;
 export type PublicKey = {};
 
 type CreateAttestationOptions = () => Promise<Options>;
-type ValidateAttestationObject = (challenge: string, attestation: AttestationObject) => Promise<UserModel>;
+type ValidateAttestationObject = (challenge: string, attestation: AttestationResult) => Promise<UserModel>;
 
 type Cred = {
     fmt: string;
@@ -99,7 +110,6 @@ const userSchema = new mongoose.Schema({
 const f2l = new Fido2Lib({
     rpId: RP_ID,
     rpName: RP_NAME,
-    origin: ORIGIN,
     ...DEFAULT_ATTESTATION_OPTIONS,
 });
 
@@ -130,13 +140,14 @@ userSchema.methods.createAttestationOptions = function () {
 };
 
 userSchema.methods.validateAttestationObject =
-    function (challenge: string, attestation: AttestationObject) {
+    function (challenge: string, attestation: AttestationResult) {
 
         return f2l.attestationResult(attestation, {
             challenge,
+            rpId: RP_ID,
             origin: ORIGIN,
             factor: 'either',
-        }).then(({ authnrData: result }: { authnrData: Map<MapKey, Cred[MapKey]> }) => {
+        }).then<Fido2AttestationResult>(({ authnrData: result }) => {
             logger.debug('authnrData: ', result);
             const credentialPublicKeyPem = result.get('credentialPublicKeyPem');
             const credentialPublicKeyJwk = result.get('credentialPublicKeyJwk');
@@ -159,5 +170,12 @@ userSchema.methods.validateAttestationObject =
         });
     };
 
-const User = mongoose.model<UserModel>('User', userSchema);
+const UserPure = mongoose.model<UserModel>('User', userSchema);
+
+class User extends UserPure {
+    static getAssertionOptions() {
+        return f2l.assertionOptions();
+    }
+}
+
 export default User;
