@@ -82,5 +82,7 @@ app.post('/session/check', passportAttestations.isAuthenticated, userController.
 app.post('/session/logout', userController.postLogout);
 app.post('/credential/begin', userController.postCreateAttestationChallenge);
 app.post('/credential/finish', userController.postFinishAttestation);
+app.post('/signin/begin', userController.postSignInStart);
+app.post('/signin/finish', userController.postSignInEnd);
 
 export default app;
