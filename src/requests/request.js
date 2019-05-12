@@ -63,11 +63,14 @@ const request = (options, payload) => new Promise((resolve, reject) => {
         req.attach(fileFieldName, file, encodeURIComponent(fileUploadName));
     });
 
-    req.end((err, response) => {
+    req.end((err, response = {}) => {
+        const {
+            body = {}
+        } = response;
         if (err) {
-            reject(response.body);
+            reject(body);
         } else {
-            resolve(response.body);
+            resolve(body);
         }
     });
 });
