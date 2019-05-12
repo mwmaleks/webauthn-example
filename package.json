@@ -26,7 +26,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "express-validator": "^5.3.1",
-    "fido2-lib": "^2.1.1",
+    "fido2-lib": "https://github.com/mwmaleks/fido2-lib",
     "lusca": "^1.6.1",
     "mongoose": "^5.4.20",
     "node-notifier": "^5.4.0",

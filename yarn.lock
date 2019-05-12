@@ -875,6 +875,33 @@
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
 
+"@peculiar/asn1-schema@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@peculiar/asn1-schema/-/asn1-schema-1.0.3.tgz#e55ff9e98a1cf31832629aabacf85be3edf13a48"
+  integrity sha512-Tfgj9eNJ6cTKEtEuidKenLHMx/Q5M8KEE9hnohHqvdpqHJXWYr5RlT3GjAHPjGXy5+mr7sSfuXfzE6aAkEGN7A==
+  dependencies:
+    asn1js "^2.0.22"
+    tslib "^1.9.3"
+
+"@peculiar/json-schema@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@peculiar/json-schema/-/json-schema-1.1.5.tgz#376e0e978d2bd7132487a5679ab375a34313e73f"
+  integrity sha512-y5XYA3pf9+c+YKVpWnPtQbNmlNCs2ehNHyMLJvq4K5Fjwc1N64YGy7MNecKW3uYLga+sqbGTQSUdOdlnaRRbpA==
+  dependencies:
+    tslib "^1.9.3"
+
+"@peculiar/webcrypto@^1.0.1":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@peculiar/webcrypto/-/webcrypto-1.0.10.tgz#7dcd2985766832b5df82a9f1047a7b02a48d4aed"
+  integrity sha512-Ohkfu3xgk/Y/6+40Uq8juAO1zPuuAuSJ/BLpP4xovjU3+u3J7Rc/dbcWB4/Z2sj+0L4hZXh6p4rZsvzDFk22QQ==
+  dependencies:
+    "@peculiar/asn1-schema" "^1.0.3"
+    "@peculiar/json-schema" "^1.1.5"
+    asn1js "^2.0.22"
+    pvtsutils "^1.0.4"
+    tslib "^1.9.3"
+    webcrypto-core "^1.0.12"
+
 "@svgr/babel-plugin-add-jsx-attribute@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-4.0.0.tgz#5acf239cd2747b1a36ec7e708de05d914cb9b948"
@@ -1101,6 +1128,11 @@
 "@types/node@*":
   version "11.10.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.10.5.tgz#fbaca34086bdc118011e1f05c47688d432f2d571"
+
+"@types/node@^10.12.15":
+  version "10.14.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.14.6.tgz#9cbfcb62c50947217f4d88d4d274cc40c22625a9"
+  integrity sha512-Fvm24+u85lGmV4hT5G++aht2C5I4Z4dYlWZIh62FAfFO/TfzXtPpoLI6I7AuBWkIFqZCnhFOoTT7RjjaIL5Fjg==
 
 "@types/node@^11.12.2":
   version "11.12.2"
@@ -1560,7 +1592,7 @@ asn1@~0.2.3:
   dependencies:
     safer-buffer "~2.1.0"
 
-asn1js@^2.0.18, asn1js@latest:
+asn1js@^2.0.18, asn1js@^2.0.22, asn1js@latest:
   version "2.0.22"
   resolved "https://registry.yarnpkg.com/asn1js/-/asn1js-2.0.22.tgz#add7ab817372da160bd5c51aa19247d749c3288c"
   integrity sha512-mKox8OHPmLZY0FUbd8JYsAu2lQk61yFH8gTq4N7AT7NzmUKISpy0LEjV/AfLyE/SNCUicdMDZUFbocsf/9qOTg==
@@ -1791,15 +1823,6 @@ babel-plugin-transform-object-rest-spread@^6.26.0:
 babel-plugin-transform-react-remove-prop-types@0.4.24:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.4.24.tgz#f2edaf9b4c6a5fbe5c1d678bfb531078c1555f3a"
-
-babel-polyfill@^6.26.0:
-  version "6.26.0"
-  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.26.0.tgz#379937abc67d7895970adc621f284cd966cf2153"
-  integrity sha1-N5k3q8Z9eJWXCtxiHyhM2WbPIVM=
-  dependencies:
-    babel-runtime "^6.26.0"
-    core-js "^2.5.0"
-    regenerator-runtime "^0.10.5"
 
 babel-preset-jest@^23.2.0:
   version "23.2.0"
@@ -3427,6 +3450,11 @@ es6-promise@3.2.1:
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-3.2.1.tgz#ec56233868032909207170c39448e24449dd1fc4"
   integrity sha1-7FYjOGgDKQkgcXDDlEjiREndH8Q=
 
+es6-promise@^4.2.6:
+  version "4.2.6"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.6.tgz#b685edd8258886365ea62b57d30de28fadcd974f"
+  integrity sha512-aRVgGdnmW2OiySVPUC9e6m+plolMAJKjZnQlCwNSuK5yQ0JN61DZSO1X1Ufd1foqWRAlig0rhduTCHe7sVtK5Q==
+
 escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
@@ -3929,18 +3957,17 @@ fecha@^2.3.3:
   resolved "https://registry.yarnpkg.com/fecha/-/fecha-2.3.3.tgz#948e74157df1a32fd1b12c3a3c3cdcb6ec9d96cd"
   integrity sha512-lUGBnIamTAwk4znq5BcqsDaxSmZ9nDVJaij6NvRt/Tg4R69gERA+otPKbS86ROw9nxVMw2/mp1fnaiWqbs6Sdg==
 
-fido2-lib@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/fido2-lib/-/fido2-lib-2.1.1.tgz#e4d38c49bf9b4115355d908c228d070617ffa822"
-  integrity sha512-Cdnp3FNXnw7XmwSiKbjTCthyDRBFGlEKZOnP3x8quxA9teHSi36a8TQ4aXd9uROEzN4brgyeCoUMA8Te746+fw==
+"fido2-lib@https://github.com/mwmaleks/fido2-lib":
+  version "2.3.0"
+  resolved "https://github.com/mwmaleks/fido2-lib#642c6569d73d44213b03f4d6528f177125b22a88"
   dependencies:
+    "@peculiar/webcrypto" "^1.0.1"
     asn1js "^2.0.18"
-    babel-polyfill "^6.26.0"
     cbor "^4.0.0"
     cose-to-jwk "^1.1.0"
     jwk-to-pem "^2.0.0"
-    node-webcrypto-ossl "^1.0.35"
-    pkijs "^2.1.27"
+    node-jose "^1.0.0"
+    pkijs "=2.1.58"
     psl "^1.1.24"
 
 figgy-pudding@^3.5.1:
@@ -5946,6 +5973,11 @@ loglevel@^1.4.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.6.1.tgz#e0fc95133b6ef276cdc8887cdaf24aa6f156f8fa"
 
+long@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/long/-/long-4.0.0.tgz#9a7b71cfb7d361a194ea555241c92f7468d5bf28"
+  integrity sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==
+
 loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
@@ -6346,11 +6378,6 @@ mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
-nan@^2.12.1:
-  version "2.13.2"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.13.2.tgz#f51dc7ae66ba7d5d55e1e6d4d8092e802c9aefe7"
-  integrity sha512-TghvYc72wlMGMVMluVo9WRJc0mB8KxxF/gZ4YYFy7V2ZQX9l7rgbPg7vjS9mt6U5HXODVFVI2bOduCzwOMv/lw==
-
 nan@^2.9.2:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.12.1.tgz#7b1aa193e9aa86057e3c7bbd0ac448e770925552"
@@ -6418,9 +6445,26 @@ node-forge@0.7.5:
   version "0.7.5"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.7.5.tgz#6c152c345ce11c52f465c2abd957e8639cd674df"
 
+node-forge@^0.8.1:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.8.2.tgz#b4bcc59fb12ce77a8825fc6a783dfe3182499c5a"
+  integrity sha512-mXQ9GBq1N3uDCyV1pdSzgIguwgtVpM7f5/5J4ipz12PKWElmPpVWLDuWl8iXmhysr21+WmX/OJ5UKx82wjomgg==
+
 node-int64@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/node-int64/-/node-int64-0.4.0.tgz#87a9065cdb355d3182d8f94ce11188b825c68a3b"
+
+node-jose@^1.0.0:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/node-jose/-/node-jose-1.1.3.tgz#26e6bc563101a356c06fb254c7ef0078e8b49670"
+  integrity sha512-kupfi4uGWhRjnOmtie2T64cLge5a1TZyalEa8uWWWBgtKBcu41A4IGKpI9twZAxRnmviamEUQRK7LSyfFb2w8A==
+  dependencies:
+    base64url "^3.0.1"
+    es6-promise "^4.2.6"
+    lodash "^4.17.11"
+    long "^4.0.0"
+    node-forge "^0.8.1"
+    uuid "^3.3.2"
 
 node-libs-browser@^2.0.0:
   version "2.2.0"
@@ -6480,16 +6524,6 @@ node-releases@^1.1.3, node-releases@^1.1.8:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.9.tgz#70d0985ec4bf7de9f08fc481f5dae111889ca482"
   dependencies:
     semver "^5.3.0"
-
-node-webcrypto-ossl@^1.0.35:
-  version "1.0.42"
-  resolved "https://registry.yarnpkg.com/node-webcrypto-ossl/-/node-webcrypto-ossl-1.0.42.tgz#d1c46d90e21786d878819ae38ed90efa877506f5"
-  integrity sha512-EjnUO+j+0bDtYLvl5/c+QoWDJebhjCCIajSod0vtNBwtLNbgjxiGrmsGEbNaBSbi5rUWKS5zGP3Zl4/pLOka0g==
-  dependencies:
-    mkdirp "^0.5.1"
-    nan "^2.12.1"
-    tslib "^1.9.3"
-    webcrypto-core "^0.1.26"
 
 nofilter@^1.0.1:
   version "1.0.2"
@@ -7026,10 +7060,10 @@ pkg-up@2.0.0:
   dependencies:
     find-up "^2.1.0"
 
-pkijs@^2.1.27:
-  version "2.1.76"
-  resolved "https://registry.yarnpkg.com/pkijs/-/pkijs-2.1.76.tgz#25a22523311cad929afb8eda3850177e4a6c8bc0"
-  integrity sha512-8Rdg784F+tQibb+nVxl3OldwvYaX6TSK/FasLwHES7K5yeNB2rRcBZINEwmet5T3gltWO/5etZeF5g3yIQGyCQ==
+pkijs@=2.1.58:
+  version "2.1.58"
+  resolved "https://registry.yarnpkg.com/pkijs/-/pkijs-2.1.58.tgz#305e973526a37724f16696492e2a85c83719967e"
+  integrity sha512-HEcJ4SbZNdyB7Jb1G7Ot3Y/gd7kZyTDJBMIIZOFselrKrCouhGbQu4rm9Lg8bumBACckq724G9uNsZbNJ6d2gw==
   dependencies:
     asn1js latest
     bytestreamjs latest
@@ -7779,6 +7813,14 @@ punycode@^1.2.4, punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
+pvtsutils@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/pvtsutils/-/pvtsutils-1.0.4.tgz#eaa4f232f054c53adc1e585d4b6f425143734877"
+  integrity sha512-lBDyLfPIWZjxHr6Nnl83/iaZgVLczDcpEqWdqRnghzBKXifRU/7D5T6JPYWUAm0sJdFeF9+sNTKto6dj/3P/Kg==
+  dependencies:
+    "@types/node" "^10.12.15"
+    tslib "^1.9.3"
+
 pvutils@latest:
   version "1.0.17"
   resolved "https://registry.yarnpkg.com/pvutils/-/pvutils-1.0.17.tgz#ade3c74dfe7178944fe44806626bd2e249d996bf"
@@ -8163,11 +8205,6 @@ regenerate-unicode-properties@^8.0.1:
 regenerate@^1.2.1, regenerate@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.0.tgz#4a856ec4b56e4077c557589cae85e7a4c8869a11"
-
-regenerator-runtime@^0.10.5:
-  version "0.10.5"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.10.5.tgz#336c3efc1220adcedda2c9fab67b5a7955a33658"
-  integrity sha1-M2w+/BIgrc7dosn6tntaeVWjNlg=
 
 regenerator-runtime@^0.11.0:
   version "0.11.1"
@@ -9747,12 +9784,13 @@ web-namespaces@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/web-namespaces/-/web-namespaces-1.1.2.tgz#c8dc267ab639505276bae19e129dbd6ae72b22b4"
 
-webcrypto-core@^0.1.26:
-  version "0.1.26"
-  resolved "https://registry.yarnpkg.com/webcrypto-core/-/webcrypto-core-0.1.26.tgz#977e5cdd9173db6ac8b18414d66ee3759a8b1024"
-  integrity sha512-BZVgJZkkHyuz8loKvsaOKiBDXDpmMZf5xG4QAOlSeYdXlFUl9c1FRrVnAXcOdb4fTHMG+TRu81odJwwSfKnWTA==
+webcrypto-core@^1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/webcrypto-core/-/webcrypto-core-1.0.12.tgz#76113a7422e7918deef593d5e2bc1460f2d57d55"
+  integrity sha512-U+qBSJY4u+Ev5KNiCOPZ5MwiCSDdoM9gxeYLdnr3q8LWnX6GOBJqcowhl/kOplbhHtaa4IVZK7R2zNC4fJ7/RQ==
   dependencies:
-    tslib "^1.7.1"
+    pvtsutils "^1.0.4"
+    tslib "^1.9.3"
 
 webidl-conversions@^4.0.2:
   version "4.0.2"
