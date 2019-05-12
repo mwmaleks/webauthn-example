@@ -16,7 +16,7 @@ import Menu from '@material-ui/core/Menu';
 
 // actions
 
-import { runLogout } from '../actions';
+import { runLogout } from '../actions/login';
 
 const styles = {
     root: {

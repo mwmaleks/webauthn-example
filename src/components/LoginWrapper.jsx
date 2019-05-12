@@ -1,7 +1,8 @@
 import React from 'react';
 import FormDialog from './FormDialog';
 import isEmail from 'validator/lib/isEmail';
-import { setEmailError, runLogin } from '../actions';
+import { runLogin } from '../actions/login';
+import { setEmailError } from '../actions';
 
 const errorMessage = 'Please, enter valid email address';
 
