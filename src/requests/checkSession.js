@@ -3,13 +3,14 @@ import request from './request';
 const checkSession = () => {
     return request({
         httpMethod: 'post',
-        url: `${window.API_URL}checkSession`
+        url: `${window.API_URL}checkSession`,
+        withCredentials: true
     })
         .then(response => {
             const {
                 serverTime,
                 email,
-            } = response;
+            } = response.payload;
             if (serverTime && email) {
                 return email;
             }
