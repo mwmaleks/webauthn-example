@@ -1,4 +1,9 @@
 import logoutRequest from '../requests/logout';
+import startSignIn from '../requests/startSignIn';
+import finishSignIn from '../requests/finishSignIn';
+
+// commands
+import getCredential from '../webauthnCommands/getCredential';
 
 // LOGIN
 export const LOGIN_START = '@LOGIN_START';
@@ -19,11 +24,21 @@ export const loginEnd = ({ isLoggedIn, email, error }) => ({
 const getLoginChallenge = (email) => (dispatch) => {
     dispatch(loginStart());
     // fixme login simulation
-    return new Promise((resolve => {
-        setTimeout(() => {
-            resolve(dispatch(loginEnd({ isLoggedIn: true, email })));
-        }, 3000);
-    }))
+    startSignIn()
+        .then(getCredential)
+        .then(finishSignIn)
+        .then(payload => {
+            if (!payload.ok) {
+                return Promise.reject();
+            }
+
+            return new Promise((resolve => {
+                setTimeout(() => {
+                    resolve(dispatch(loginEnd({ isLoggedIn: true, email: payload.email })));
+                }, 500);
+            }))
+        })
+
 };
 
 export const runLogin = (email) => (dispatch) => {
