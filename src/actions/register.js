@@ -32,7 +32,7 @@ const getAttestationChallenge = (email) => (dispatch) => {
     return startRegister(email)
         .then(createCredentials)
         .then(publicKeyCredToJSON)
-        .then(finishRegister())
+        .then(finishRegister)
         .then(result => {
             if (!result.ok) {
                 return Promise.reject();
