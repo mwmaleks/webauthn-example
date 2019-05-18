@@ -264,7 +264,6 @@ export const postSignInEnd = (req: Request, res: Response) => {
         .isString()
         .isLength({ max: 500, min: 50 });
     req.assert('assertion.response.signature', invalidCredsMessage).isString().isLength({ max: 200, min: 10 });
-    req.assert('assertion.response.userHandle', invalidCredsMessage).isString().isLength({ max: 200, min: 10 });
     req.assert('attestation.type', invalidCredsMessage).isIn('public-key');
 
     const {
