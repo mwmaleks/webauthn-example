@@ -10,6 +10,11 @@ import TextField from '@material-ui/core/TextField';
 
 import { customTheme } from '../withRoot';
 
+const handleSubmit = cb => event => {
+    event.preventDefault();
+    cb();
+};
+
 const EmailField = customTheme(TextField);
 
 const FormDialog = ({
@@ -25,35 +30,37 @@ const FormDialog = ({
 
     return (
         <Dialog open={isOpened} onClose={onClose}>
-            <DialogTitle id="form-login-title">{title}</DialogTitle>
-            <DialogContent>
-                <DialogContentText>
-                    Please enter your email address here
-                </DialogContentText>
-                <EmailField
-                    autoFocus
-                    margin="dense"
-                    id="email"
-                    label="Email Address"
-                    type="email"
-                    fullWidth
-                    name="email"
-                    autoComplete="email"
-                    variant="outlined"
-                    error={isEmailError}
-                    helperText={errorMessage}
-                    onChange={({target: { value: email }}) => setEmail(email)}
-                    onBlur={() => onBlur(email)}
-                />
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={onClose} color="default">
-                    Cancel
-                </Button>
-                <Button onClick={() => onAction(email)} color="secondary">
-                    {title}
-                </Button>
-            </DialogActions>
+            <form onSubmit={handleSubmit(() => onAction(email))}>
+                <DialogTitle id="form-login-title">{title}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Please enter your email address here
+                    </DialogContentText>
+                    <EmailField
+                        autoFocus
+                        margin="dense"
+                        id="email"
+                        label="Email Address"
+                        type="email"
+                        fullWidth
+                        name="email"
+                        autoComplete="email"
+                        variant="outlined"
+                        error={isEmailError}
+                        helperText={errorMessage}
+                        onChange={({target: { value: email }}) => setEmail(email)}
+                        onBlur={() => onBlur(email)}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={onClose} color="default">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleSubmit} color="secondary">
+                        {title}
+                    </Button>
+                </DialogActions>
+            </form>
         </Dialog>
     );
 };
