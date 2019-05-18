@@ -11,7 +11,7 @@ export type DefaultAttestationOptions = {
 };
 
 export const DEFAULT_ATTESTATION_OPTIONS: DefaultAttestationOptions = {
-    timeout: 15000,
+    timeout: 150000,
     challengeSize: 128,
     attestation: 'none',
     cryptoParams: [-7, -257],
