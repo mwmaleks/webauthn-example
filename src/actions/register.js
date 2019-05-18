@@ -7,6 +7,9 @@ import publicKeyCredToJSON from '../webauthnCommands/publicKeyCredToJSON';
 
 import { loginEnd } from './login';
 
+// common actions
+import { error } from './';
+
 //REGISTER
 export const REGISTER_START = '@REGISTER_START';
 export const REGISTER_END = '@REGISTER_END';
@@ -45,5 +48,6 @@ const getAttestationChallenge = (email) => (dispatch) => {
                     resolve();
                 }, 500);
             }))
-        });
+        })
+        .catch(() => dispatch(error(true)));
 };

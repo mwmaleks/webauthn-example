@@ -2,6 +2,9 @@ import logoutRequest from '../requests/logout';
 import startSignIn from '../requests/startSignIn';
 import finishSignIn from '../requests/finishSignIn';
 
+// common actions
+import { error } from './';
+
 // commands
 import getCredential from '../webauthnCommands/getCredential';
 
@@ -37,6 +40,7 @@ const getLoginChallenge = () => (dispatch) => {
                 }, 500);
             }))
         })
+        .catch(() => dispatch(error(true)))
 
 };
 
@@ -48,4 +52,6 @@ const logout = () => ({
     type: LOGOUT
 });
 
-export const runLogout = () => (dispatch) => logoutRequest().then(() => dispatch(logout()));
+export const runLogout = () => (dispatch) => logoutRequest()
+    .then(() => dispatch(logout()))
+    .catch(() => dispatch(error(true)));
