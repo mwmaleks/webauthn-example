@@ -131,7 +131,7 @@ function Main(props) {
                 <div className={classes.imageWrapper}>
                     <img src={happyCat} className={classes.happyCat} alt="Happy Cat"/>
                 </div>
-            </div>)) : null}
+            </div>)) : null
         }
         {
             isAppError && <Error />
