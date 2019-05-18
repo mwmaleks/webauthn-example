@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 // images
-import errorCat from '../images/error_ cat.png';
+import errorCat from '../images/error_cat.png';
 
 // styles
 const styles = {
