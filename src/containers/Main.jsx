@@ -12,6 +12,7 @@ import AppBarBlock from '../components/AppBarBlock'
 
 // actions
 import { checkSession } from '../actions';
+import { runLogin } from '../actions/login';
 
 // images
 import happyCat from '../images/cat-happy-yellow.png';
@@ -57,7 +58,7 @@ function Main(props) {
     const [isOpenedRegister, setOpenRegister] = useState(false);
     const [isLoggedInSate, setLoginState] = useState(false);
     const [isCheckedSession, setChecked] = useState(false);
-    const handleOpenLogin = () => setOpenLogin(!isOpenedLogin);
+    const handleLogin = () => dispatch(runLogin());
     const handleOpenRegister = () => setOpenRegister(!isOpenedRegister);
 
     useEffect(() => {
@@ -100,7 +101,7 @@ function Main(props) {
                     WebAuthn Demo
                 </Typography>
                 <Buttons
-                    onClickLogin={handleOpenLogin}
+                    onClickLogin={handleLogin}
                     onClickRegister={handleOpenRegister}
                     isLoginLoading={isLoginLoading}
                     isRegisterLoading={isRegisterLoading}
