@@ -56,7 +56,7 @@ const FormDialog = ({
                     <Button onClick={onClose} color="default">
                         Cancel
                     </Button>
-                    <Button onClick={handleSubmit} color="secondary">
+                    <Button onClick={handleSubmit(() => onAction(email))} color="secondary">
                         {title}
                     </Button>
                 </DialogActions>
