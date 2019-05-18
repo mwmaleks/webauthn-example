@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 import {
     SET_EMAIL_VALIDATION,
+    SET_APP_ERROR,
     LOGIN_START,
     LOGIN_END,
     LOGOUT,
-
     CHECK_SESSION_START,
     CHECK_SESSION_END,
 } from '../actions'
@@ -13,12 +13,18 @@ import {
     REGISTER_END,
 } from '../actions/register';
 
-const isEmailError = (state = {}, action) => {
+const errorState = (state = {}, action = {}) => {
     switch (action.type) {
         case SET_EMAIL_VALIDATION:
-            return action.isEmailError;
+            return {
+                isEmailError: action.isEmailError
+            };
+        case SET_APP_ERROR:
+            return {
+                isApplicationError: action.isApplicationError
+            };
         default:
-            return false;
+            return {};
     }
 };
 
@@ -98,7 +104,7 @@ const checkSession = (state = {}, action) => {
 };
 
 const rootReducer = combineReducers({
-    isEmailError,
+    errorState,
     runLogin,
     runRegister,
     checkSession,
