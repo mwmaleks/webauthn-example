@@ -21,9 +21,8 @@ export const loginEnd = ({ isLoggedIn, email, error }) => ({
     error
 });
 
-const getLoginChallenge = (email) => (dispatch) => {
+const getLoginChallenge = () => (dispatch) => {
     dispatch(loginStart());
-    // fixme login simulation
     startSignIn()
         .then(getCredential)
         .then(finishSignIn)
@@ -41,8 +40,8 @@ const getLoginChallenge = (email) => (dispatch) => {
 
 };
 
-export const runLogin = (email) => (dispatch) => {
-    return dispatch(getLoginChallenge(email));
+export const runLogin = () => (dispatch) => {
+    return dispatch(getLoginChallenge());
 };
 
 const logout = () => ({
