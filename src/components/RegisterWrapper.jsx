@@ -6,7 +6,7 @@ import { runRegister }  from '../actions/register';
 
 const errorMessage = 'Please, enter valid email address';
 
-class LoginWrapper extends React.PureComponent {
+class RegisterWrapper extends React.PureComponent {
     handleRegister = (email) => {
         const {
             dispatch,
@@ -46,4 +46,4 @@ class LoginWrapper extends React.PureComponent {
     }
 }
 
-export default LoginWrapper;
+export default RegisterWrapper;
