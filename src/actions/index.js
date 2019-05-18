@@ -2,6 +2,7 @@ import checkSessionRequest from '../requests/checkSession';
 import { loginEnd } from './login';
 
 export const SET_EMAIL_VALIDATION = '@SET_EMAIL_VALIDATION';
+export const SET_APP_ERROR = '@SET_APP_ERROR';
 
 // LOGIN
 export const LOGIN_START = '@LOGIN_START';
@@ -34,3 +35,8 @@ export const checkSession = () => (dispatch) => {
         })
         .catch(() => dispatch(checkSessionEnd(null)));
 };
+
+export const error = (state = false) => ({
+    type: SET_APP_ERROR,
+    isApplicationError: state
+});
