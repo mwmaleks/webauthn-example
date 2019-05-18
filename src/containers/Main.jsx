@@ -9,10 +9,12 @@ import LoginWrapper from '../components/LoginWrapper';
 import RegisterWrapper from '../components/RegisterWrapper';
 import Buttons from '../components/Buttons';
 import AppBarBlock from '../components/AppBarBlock'
+import Error from '../components/Error';
 
 // actions
 import { checkSession } from '../actions';
 import { runLogin } from '../actions/login';
+import { error } from '../actions';
 
 // images
 import happyCat from '../images/cat-happy-yellow.png';
@@ -53,11 +55,12 @@ const styles = theme => ({
 function Main(props) {
     // fixme es-lint
     const { classes, dispatch, isEmailError, isLoginLoading, isRegisterLoading,
-        isLoggedIn, isRegistered, email } = props;
+        isLoggedIn, isRegistered, email, isApplicationError } = props;
     const [isOpenedLogin, setOpenLogin] = useState(false);
     const [isOpenedRegister, setOpenRegister] = useState(false);
     const [isLoggedInSate, setLoginState] = useState(false);
     const [isCheckedSession, setChecked] = useState(false);
+    const [isAppError, setAppError] = useState(false);
     const handleLogin = () => dispatch(runLogin());
     const handleOpenRegister = () => setOpenRegister(!isOpenedRegister);
 
@@ -80,11 +83,23 @@ function Main(props) {
                 setLoginState(false);
             }, 2000);
         }
+
+        if (isAppError && !isApplicationError) {
+            setAppError(false);
+        }
+
+        if (isApplicationError && !isAppError) {
+            setAppError(true);
+            setTimeout(() => {
+                setAppError(false);
+                dispatch(error(false));
+            }, 1500)
+        }
     });
 
     return (<div className={classes.root}>
         {
-            !isLoggedInSate ? <div className={classes.nonAuth}>
+            !isAppError ? (!isLoggedInSate ? <div className={classes.nonAuth}>
                 <LoginWrapper
                     isOpened={isOpenedLogin}
                     onClose={() => setOpenLogin(false)}
@@ -116,7 +131,10 @@ function Main(props) {
                 <div className={classes.imageWrapper}>
                     <img src={happyCat} className={classes.happyCat} alt="Happy Cat"/>
                 </div>
-            </div>)
+            </div>)) : null}
+        }
+        {
+            isAppError && <Error />
         }
     </div>);
 }
