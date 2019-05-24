@@ -49,5 +49,8 @@ const getAttestationChallenge = (email) => (dispatch) => {
                 }, 500);
             }))
         })
-        .catch(() => dispatch(error(true)));
+        .catch((err) => {
+            console.log(err);
+            dispatch(error(true));
+        });
 };
