@@ -62,16 +62,24 @@ export const postCreateAttestationChallenge = (req: Request, res: Response) => {
 
             logger.debug('email:', email);
 
-            User.findOne({ email }, (err: Error, user: UserModel) => {
-                if (!err) {
-                    return user;
-                }
+            return new Promise<UserModel>((resolve, reject) => {
+                User.findOne({ email }, (err: Error, user: UserModel) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
 
-                logger.debug('user createName:', user);
+                    if (user instanceof User) {
+                        resolve(user);
+                        return;
+                    }
 
-                return new User({
-                    email,
-                    name: createName(email),
+                    logger.debug('user createName:', createName(email));
+
+                    resolve(new User({
+                        email,
+                        name: createName(email),
+                    }));
                 });
             }).then((user) => {
                 return user.createAttestationOptions()
