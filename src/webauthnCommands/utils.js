@@ -13,8 +13,8 @@ export const preformatGetCredential = ({ challenge, timeout, rpId, id, userVerif
     rpId,
     userVerification,
     challenge: decode(challenge),
-    allowCredentials: [{
+    allowCredentials: id.map((value) => ({
         type: 'public-key',
-        id: decode(id)
-    }],
+        id: decode(value)
+    })),
 });

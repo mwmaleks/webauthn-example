@@ -62,23 +62,29 @@ export const postCreateAttestationChallenge = (req: Request, res: Response) => {
 
             logger.debug('email:', email);
 
-            const user = new User({
-                email,
-                name: createName(email),
-            });
+            User.findOne({ email }, (err: Error, user: UserModel) => {
+                if (!err) {
+                    return user;
+                }
 
-            logger.debug('user createName:', user);
+                logger.debug('user createName:', user);
 
-            return user.createAttestationOptions()
-                .then((options) => {
-                    // save user id for further login flows, and challenge for to continue registration
-                    req.session.challenge = options.challenge;
-                    req.session.userId = options.user.id;
-                    logger.debug('sending attestation options:', options);
-
-                    res.json(options);
-                    logger.debug('========================================== postCreateAttestationChallenge');
+                return new User({
+                    email,
+                    name: createName(email),
                 });
+            }).then((user) => {
+                return user.createAttestationOptions()
+                    .then((options) => {
+                        // save user id for further login flows, and challenge for to continue registration
+                        req.session.challenge = options.challenge;
+                        req.session.userId = options.user.id;
+                        logger.debug('sending attestation options:', options);
+
+                        res.json(options);
+                        logger.debug('========================================== postCreateAttestationChallenge');
+                    });
+            });
         })
         .catch((error) => {
             logger.error(error);
@@ -175,7 +181,8 @@ export const postFinishAttestation = (req: Request, res: Response) => {
             // invalidate the challenge
             delete req.session.challenge;
             // save credId just signed up to session
-            req.session.credId = user.lastCredId;
+            const { credIds } = req.session;
+            req.session.credIds = [...(credIds ? credIds : []), user.lastCredId];
 
             logger.debug('new user: ', user);
 
@@ -222,7 +229,7 @@ export const postLogout = (req: Request, res: Response) => {
 };
 
 export const postSignInStart = (req: Request, res: Response) => {
-    if (!req.session.credId) {
+    if (!req.session.credIds) {
         res.send({
             error: 'can not find credential id',
             code: 'no_credential_id',
@@ -237,7 +244,7 @@ export const postSignInStart = (req: Request, res: Response) => {
             logger.debug('options: ', options);
             res.json({
                 payload: {
-                    id: req.session.credId,
+                    id: req.session.credIds,
                     ...options,
                 },
                 ok: true,
