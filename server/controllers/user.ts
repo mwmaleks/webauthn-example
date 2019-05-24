@@ -96,7 +96,7 @@ export const postFinishAttestation = (req: Request, res: Response) => {
     req.assert('attestation.response.clientDataJSON', invalidCredsMessage).isString().isLength({ max: 800, min: 50 });
     req.assert('attestation.response.attestationObject', invalidCredsMessage)
         .isString()
-        .isLength({ max: 500, min: 50 });
+        .isLength({ max: 1500, min: 50 });
     req.assert('attestation.type', invalidCredsMessage).isIn('public-key');
 
     const {
@@ -262,7 +262,7 @@ export const postSignInEnd = (req: Request, res: Response) => {
     req.assert('assertion.response.clientDataJSON', invalidCredsMessage).isString().isLength({ max: 800, min: 50 });
     req.assert('assertion.response.authenticatorData', invalidCredsMessage)
         .isString()
-        .isLength({ max: 500, min: 50 });
+        .isLength({ max: 1500, min: 50 });
     req.assert('assertion.response.signature', invalidCredsMessage).isString().isLength({ max: 200, min: 10 });
     req.assert('attestation.type', invalidCredsMessage).isIn('public-key');
 
