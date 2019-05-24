@@ -25,7 +25,7 @@ export const loginEnd = ({ isLoggedIn, email, error }) => ({
     error
 });
 
-const getLoginChallenge = () => (dispatch) => {
+const getLoginChallenge = (skipError) => (dispatch) => {
     dispatch(loginStart());
     startSignIn()
         .then(getCredential)
@@ -41,12 +41,11 @@ const getLoginChallenge = () => (dispatch) => {
                 }, 500);
             }))
         })
-        .catch(() => dispatch(error(true)))
-
+        .catch(() => !skipError && dispatch(error(true)))
 };
 
-export const runLogin = () => (dispatch) => {
-    return dispatch(getLoginChallenge());
+export const runLogin = ({ skipError } = {}) => (dispatch) => {
+    return dispatch(getLoginChallenge(skipError));
 };
 
 const logout = () => ({
@@ -60,7 +59,7 @@ export const runLogout = () => (dispatch) => logoutRequest()
 export const pwaAutoLogin = () => (dispatch) => {
     const isFullScreen = matchMediaOnInit();
     if (isFullScreen) {
-        dispatch(runLogin());
+        dispatch(runLogin({ skipError: true }));
     }
 
     return dispatch(matchMedia(isFullScreen));
