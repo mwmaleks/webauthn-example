@@ -4,6 +4,7 @@ import finishSignIn from '../requests/finishSignIn';
 
 // common actions
 import { error } from './';
+import { matchMediaOnInit, matchMedia } from './matchMedia';
 
 // commands
 import getCredential from '../webauthnCommands/getCredential';
@@ -55,3 +56,12 @@ const logout = () => ({
 export const runLogout = () => (dispatch) => logoutRequest()
     .then(() => dispatch(logout()))
     .catch(() => dispatch(error(true)));
+
+export const pwaAutoLogin = () => (dispatch) => {
+    const isFullScreen = matchMediaOnInit();
+    if (isFullScreen) {
+        dispatch(runLogin());
+    }
+
+    return dispatch(matchMedia(isFullScreen));
+}

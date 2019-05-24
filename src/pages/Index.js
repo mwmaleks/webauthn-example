@@ -12,7 +12,7 @@ class Index extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => {
-    const { errorState, runLogin, runRegister, checkSession } = state;
+    const { errorState, runLogin, runRegister, main } = state;
     const {
         isLoginLoading,
         email,
@@ -26,13 +26,15 @@ const mapStateToProps = (state) => {
     const {
         isCheckingSession = true,
         email: sessionEmail,
-    } = checkSession;
+        isFullscreen,
+    } = main;
     const {
         isApplicationError,
         isEmailError,
     } = errorState;
 
     return {
+        isFullscreen,
         isCheckingSession,
         isEmailError,
         isApplicationError,

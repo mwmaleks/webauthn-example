@@ -55,7 +55,7 @@ const styles = theme => ({
 function Main(props) {
     // fixme es-lint
     const { classes, dispatch, isEmailError, isLoginLoading, isRegisterLoading,
-        isLoggedIn, isRegistered, email, isApplicationError } = props;
+        isLoggedIn, isRegistered, email, isApplicationError, isFullscreen, isCheckingSession } = props;
     const [isOpenedLogin, setOpenLogin] = useState(false);
     const [isOpenedRegister, setOpenRegister] = useState(false);
     const [isLoggedInSate, setLoginState] = useState(false);
@@ -66,7 +66,7 @@ function Main(props) {
 
     useEffect(() => {
         if (!isCheckedSession) {
-            dispatch(checkSession());
+            dispatch(checkSession(isFullscreen));
             setChecked(true);
         }
 

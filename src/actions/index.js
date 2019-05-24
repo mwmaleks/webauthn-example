@@ -1,5 +1,5 @@
 import checkSessionRequest from '../requests/checkSession';
-import { loginEnd } from './login';
+import {loginEnd, pwaAutoLogin} from './login';
 
 export const SET_EMAIL_VALIDATION = '@SET_EMAIL_VALIDATION';
 export const SET_APP_ERROR = '@SET_APP_ERROR';
@@ -25,15 +25,21 @@ export const checkSessionEnd = (email) =>({
     email
 });
 
-export const checkSession = () => (dispatch) => {
+export const checkSession = (isFullScreen) => (dispatch) => {
     dispatch(checkSessionStart());
 
     return checkSessionRequest()
         .then((email) => {
             dispatch(checkSessionEnd(email));
             dispatch(loginEnd({ isLoggedIn: true, email, error: null }));
+
         })
-        .catch(() => dispatch(checkSessionEnd(null)));
+        .catch(() => {
+            dispatch(checkSessionEnd(null));
+            if (isFullScreen === null) {
+                dispatch(pwaAutoLogin());
+            }
+        });
 };
 
 export const error = (state = false) => ({

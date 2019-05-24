@@ -12,6 +12,9 @@ import {
     REGISTER_START,
     REGISTER_END,
 } from '../actions/register';
+import {
+    MATCH_MEDIA
+} from '../actions/matchMedia';
 
 const errorState = (state = {}, action = {}) => {
     switch (action.type) {
@@ -80,12 +83,13 @@ const runRegister = (state = {}, action) => {
     }
 };
 
-const checkSession = (state = {}, action) => {
+const main = (state = {}, action) => {
     switch (action.type) {
         case CHECK_SESSION_START:
             return {
                 ...state,
                 isCheckingSession: true,
+                isFullscreen: null,
             };
         case CHECK_SESSION_END:
             return {
@@ -93,12 +97,19 @@ const checkSession = (state = {}, action) => {
                 isCheckingSession: false,
                 isLoggedIn: Boolean(action.email),
                 email: action.email,
+                isFullscreen: null,
+            }
+        case MATCH_MEDIA:
+            return {
+                ...state,
+                isFullscreen: action.isFullscreen,
             };
         default:
             return {
                 isCheckingSession: true,
                 isLoggedIn: false,
                 email: null,
+                isFullscreen: null,
             };
     }
 };
@@ -107,7 +118,7 @@ const rootReducer = combineReducers({
     errorState,
     runLogin,
     runRegister,
-    checkSession,
+    main,
 });
 
 export default rootReducer
