@@ -7,5 +7,5 @@ export const matchMedia = (isFullscreen) => ({
 });
 
 export const matchMediaOnInit = () => {
-    return Boolean(window.matchMedia('(display-mode: fullscreen)').matches || window.navigator.fullscreen);
+    return Boolean(window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone);
 };
