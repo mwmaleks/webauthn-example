@@ -44,7 +44,7 @@ const FormDialog = ({
                         type="email"
                         fullWidth
                         name="email"
-                        autoComplete="email"
+                        autoComplete="off"
                         variant="outlined"
                         error={isEmailError}
                         helperText={errorMessage}
