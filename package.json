@@ -47,6 +47,7 @@
   "scripts": {
     "start": "react-scripts start",
     "serve": "node ./dist",
+    "server:build": "tsc --project ./server/tsconfig.json",
     "serve:watch": "tsc --project ./server/tsconfig.json && tsc-watch --project ./server/tsconfig.json --onSuccess \"yarn serve\"",
     "dev": "yarn serve & yarn start",
     "build": "react-scripts build",
