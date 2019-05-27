@@ -16,7 +16,7 @@ const prod = ENVIRONMENT === 'production';
 export const SESSION_SECRET = process.env['SESSION_SECRET'];
 export const MONGODB_URI = prod ? process.env['MONGODB_URI'] : process.env['MONGODB_URI_LOCAL'];
 export const RP_ID = process.env.RP_ID || 'localhost';
-export const ORIGIN = process.env.ORIGIN || 'http://localhost:3000';
+export const ORIGIN = process.env.ORIGIN || 'http://localhost:8080';
 export const RP_NAME = process.env.RP_NAME || 'webauthn-example';
 
 if (!SESSION_SECRET) {

@@ -46,7 +46,7 @@ mongoose.connect(mongoUrl).then(
 if (ENVIRONMENT !== 'production') {
     const corsOptions = {
         credentials: true,
-        origin: `http://${process.env.FRONT_HOST || 'localhost'}:${process.env.FRONT_PORT || 3000}`,
+        origin: `http://${process.env.FRONT_HOST || 'localhost'}:${process.env.FRONT_PORT || 8080}`,
         optionsSuccessStatus: 200,
     };
 
