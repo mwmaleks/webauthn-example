@@ -1,4 +1,11 @@
+#keys
+keys/
+#db
+db/
+
+#redacters
 .idea/
+
 # Logs
 logs
 *.log
