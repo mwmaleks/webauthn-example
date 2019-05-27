@@ -78,11 +78,11 @@ app.use((req, res, next) => {
 });
 
 // routes
-app.post('/session/check', passportAttestations.isAuthenticated, userController.postSession);
-app.post('/session/logout', userController.postLogout);
-app.post('/credential/begin', userController.postCreateAttestationChallenge);
-app.post('/credential/finish', userController.postFinishAttestation);
-app.post('/signin/begin', userController.postSignInStart);
-app.post('/signin/finish', userController.postSignInEnd);
+app.post('/api/session/check', passportAttestations.isAuthenticated, userController.postSession);
+app.post('/api/session/logout', userController.postLogout);
+app.post('/api/credential/begin', userController.postCreateAttestationChallenge);
+app.post('/api/credential/finish', userController.postFinishAttestation);
+app.post('/api/signin/begin', userController.postSignInStart);
+app.post('/api/signin/finish', userController.postSignInEnd);
 
 export default app;
