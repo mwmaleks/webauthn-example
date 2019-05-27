@@ -7,14 +7,16 @@ import withRoot from '../withRoot';
 // components
 import LoginWrapper from '../components/LoginWrapper';
 import RegisterWrapper from '../components/RegisterWrapper';
+import UserChoice from '../components/UserChoice';
 import Buttons from '../components/Buttons';
 import AppBarBlock from '../components/AppBarBlock'
 import Error from '../components/Error';
 
 // actions
-import { checkSession } from '../actions';
+import { checkSession, } from '../actions';
 import { runLogin } from '../actions/login';
 import { error } from '../actions';
+import { runRegister } from '../actions/register';
 
 // images
 import happyCat from '../images/cat-happy-yellow.png';
@@ -52,17 +54,28 @@ const styles = theme => ({
     }
 });
 
+
 function Main(props) {
     // fixme es-lint
     const { classes, dispatch, isEmailError, isLoginLoading, isRegisterLoading,
-        isLoggedIn, isRegistered, email, isApplicationError, isFullscreen, isCheckingSession } = props;
+        isLoggedIn, isRegistered, email, isApplicationError, isFullscreen } = props;
     const [isOpenedLogin, setOpenLogin] = useState(false);
+    const [isUserChoiceOpened, setUserChoice] = useState(false);
     const [isOpenedRegister, setOpenRegister] = useState(false);
     const [isLoggedInSate, setLoginState] = useState(false);
     const [isCheckedSession, setChecked] = useState(false);
     const [isAppError, setAppError] = useState(false);
     const handleLogin = () => dispatch(runLogin());
     const handleOpenRegister = () => setOpenRegister(!isOpenedRegister);
+    const handleAppInstalled = () => setUserChoice(true);
+
+    useEffect(() => {
+        window.addEventListener('appinstalled', handleAppInstalled);
+
+        return () => {
+            window.removeEventListener('appinstalled', handleAppInstalled);
+        }
+    }, []);
 
     useEffect(() => {
         if (!isCheckedSession) {
@@ -124,13 +137,22 @@ function Main(props) {
                     isRegistered={isRegistered}
                 />
             </div> : (!isLoggedIn ?
-                <div className={classes.imageWrapper}>
-                    <img src={happyAss} className={classes.happyCat} alt="Happy Ass"/>
-                </div> : <div className={classes.auth}>
-                <AppBarBlock email={email} dispatch={dispatch}/>
-                <div className={classes.imageWrapper}>
-                    <img src={happyCat} className={classes.happyCat} alt="Happy Cat"/>
-                </div>
+                    <div className={classes.imageWrapper}>
+                        <img src={happyAss} className={classes.happyCat} alt="Happy Ass"/>
+                    </div>
+                : <div className={classes.auth}>
+                    <AppBarBlock email={email} dispatch={dispatch}/>
+                    <div className={classes.imageWrapper}>
+                        <img src={happyCat} className={classes.happyCat} alt="Happy Cat"/>
+                    </div>
+                    <UserChoice
+                        isOpened={isUserChoiceOpened}
+                        onClose={() => setUserChoice(false)}
+                        onAction={() => {
+                            setUserChoice(false);
+                            dispatch(runRegister(email));
+                        }}
+                    />
             </div>)) : null
         }
         {
