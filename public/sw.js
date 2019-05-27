@@ -1,16 +1,13 @@
 self.addEventListener('install', function(event) {
     event.waitUntil(
-        caches.open('webauthn-demo').then(function(cache) {
-            return cache.addAll(
-                [
-                    '/static/js/0.chunk.js',
-                    '/static/js/bundle.chunk.js',
-                    '/static/js/main.chunk.js',
-                    '/index.html'
-                ]
-            );
-        })
-    );
+            caches.open('webauthn-demo').then(function(cache) {
+                return cache.addAll(
+                    [
+                        '/index.html'
+                    ]
+                );
+            })
+        );
 });
 
 self.addEventListener('activate', (event) => {
