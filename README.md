@@ -29,3 +29,6 @@ docker-compose down && docker-compose up
 
 ### Верификация WebAuthn объектов AttestationObject, AssertionObject
 `fido2-lib` [https://github.com/mwmaleks/fido2-lib]
+
+### Демо
+https://ritfest.dev/
