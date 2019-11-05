@@ -28,7 +28,7 @@
     "express-validator": "^5.3.1",
     "fido2-lib": "https://github.com/mwmaleks/fido2-lib",
     "lusca": "^1.6.1",
-    "mongoose": "^5.4.20",
+    "mongoose": "^5.7.5",
     "node-notifier": "^5.4.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
