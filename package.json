@@ -23,7 +23,7 @@
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
     "errorhandler": "^1.5.0",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-session": "^1.15.6",
     "express-validator": "^5.3.1",
     "fido2-lib": "https://github.com/mwmaleks/fido2-lib",
